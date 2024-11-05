@@ -45,9 +45,9 @@ Exploration of zk-Biometric Authentication using Voiceprint, an alternative to t
 
 ![First approach diagram](https://github.com/Privacy-Lab-Latam-Builders/voizk-ML/blob/main/img/firstapproach.png?raw=true)
 
-  1) Pre-processing of the raw data with feature extraction 
-  2) Two ML models to actually consume the pre-processed data and provide meaningful prediction
-  3) Post-processing with additional checks giving the final answer yes/no to the question "is the user authenticated?"
+    1.- Pre-processing of the raw data with feature extraction 
+    2.- Two ML models to actually consume the pre-processed data and provide meaningful prediction
+    3.- Post-processing with additional checks giving the final answer yes/no to the question "is the user authenticated?"
 
 Turns out ZKVMs are still limited. We cannot process a large input there, most libraries cannot be compiled. Essentially the only thing we can run from the world of Rust is simple processing of short enough input strings plus simple computations (it can hash, it can verify proofs, can operate on strings and numbers to some extent, but processing sound data for cleaning and extraction, even if there are libraries and algorithms, it's just hard to implement from scratch and overhead would be huge even then).
 
@@ -60,9 +60,10 @@ The first wall is hit on ZKVMs: If we cannot verify pre-processing we already ca
 ![Second approach diagram](https://github.com/Privacy-Lab-Latam-Builders/voizk-ML/blob/main/img/secondapproach.jpg?raw=true)
 
 After our first approach failed we tried to find ML tools to process raw sound. There are networks trained on VoxCeleb dataset which could be used in our fun example, as well as some speech-to-text models. In our second approach we thought of building a system with three main components:
-    1) ML model for identifying the speaker (RawNet3)
-    2) ML model for recognizing the words spoken (Wave2Vec2)
-    3) The protocols for generating the proofs of computation on each of the outputs (EZKL for the ZKML framework, ZKM for a ZKVM).
+
+    1.- ML model for identifying the speaker (RawNet3)
+    2.- ML model for recognizing the words spoken (Wave2Vec2)
+    3.- The protocols for generating the proofs of computation on each of the outputs (EZKL for the ZKML framework, ZKM for a ZKVM).
 
 We tried several of them just to see how inference works and what outputs will be there and the wall we hit was also close: EZKL and underlying tract doesn't suport tensor sequence operations and none of those models dealing with sound can be circuitized. The search for a weird workaround gave us nothing good.
 
